@@ -61,12 +61,13 @@ public class Node {
 
     public void insert(ArrayList<Character> keys) {
         if(this.getChild(keys.get(0)) != null) {
+            Character c = keys.get(0);
             keys.remove(0);
             if(keys.size() == 0) {
-                this.setWord(true);
+                this.getChild(c).setWord(true);
                 return;
             }
-            this.getChild(keys.get(0)).insert(keys);
+            this.getChild(c).insert(keys);
         } else {
             Node n = new Node();
             n.setKey(keys.get(0));

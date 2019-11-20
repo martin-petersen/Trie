@@ -15,6 +15,6 @@ public class Main {
         root.insert(s2);
         root.insert(s3);
 
-        System.out.println(root.closeWords("a").toString());
+        System.out.println(root.closeWords("ameix").toString());
     }
 }
