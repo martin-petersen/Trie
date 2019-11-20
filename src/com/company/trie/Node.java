@@ -6,36 +6,36 @@ public class Node {
     private Character key;
     private boolean word = false;
     private Node parent;
-    ArrayList<Node> children = new ArrayList<>();
+    private ArrayList<Node> children = new ArrayList<>();
 
-    public Node() {
+    Node() {
     }
 
     public char getKey() {
         return key;
     }
 
-    public void setKey(char key) {
+    private void setKey(char key) {
         this.key = key;
     }
 
-    public Node getParent() {
+    private Node getParent() {
         return parent;
     }
 
-    public void setParent(Node parent) {
+    private void setParent(Node parent) {
         this.parent = parent;
     }
 
-    public boolean isWord() {
+    boolean isWord() {
         return word;
     }
 
-    public void setWord(boolean word) {
+    private void setWord(boolean word) {
         this.word = word;
     }
 
-    public Node getChild(Character key) {
+    Node getChild(Character key) {
         for (Node n:
              this.children) {
             if(n.getKey() == key) {
@@ -45,7 +45,7 @@ public class Node {
         return null;
     }
 
-    public Node getChild(Node node) {
+    private Node getChild(Node node) {
         for (Node n:
                 this.children) {
             if(n == node) {
@@ -55,11 +55,11 @@ public class Node {
         return null;
     }
 
-    public void setChildren(Node child) {
+    private void setChildren(Node child) {
         this.children.add(child);
     }
 
-    public void insert(ArrayList<Character> keys) {
+    void insert(ArrayList<Character> keys) {
         if(this.getChild(keys.get(0)) != null) {
             Character c = keys.get(0);
             keys.remove(0);
@@ -83,44 +83,33 @@ public class Node {
         }
     }
 
-    public ArrayList<String> find(ArrayList<Character> keys) {
+    ArrayList<String> find(ArrayList<Character> keys) {
         ArrayList<String> palavras = new ArrayList<>();
-        StringBuilder sb = new StringBuilder();
-        for (Character s:
-             keys) {
-            sb.append(s);
-        }
-        if(keys.size() == 1) {
-            ArrayList<Node> nodes = this.getWordNodes();
-            for (Node n:
-                 nodes) {
-                palavras.add(makeWord(n));
-            }
-        } else {
+        Node node = this;
+        while(keys.size() > 0) {
+            node = node.getChild(keys.get(0));
             keys.remove(0);
-            if(this.isWord()) {
-                palavras.add(makeWord(this));
-            }
-            this.getChild(keys.get(0));
         }
 
-        for (int i = 0; i < palavras.size(); ++i) {
-            palavras.set(i,sb.toString() + palavras.get(i));
+        ArrayList<Node> nodes = node.getWordNodes();
+
+        for (Node n:
+             nodes) {
+            palavras.add(makeWord(n));
         }
         return palavras;
     }
 
     private ArrayList<Node> getWordNodes() {
         ArrayList<Node> nodes = new ArrayList<>();
-        for (Node n:
-             this.children) {
+        Node n;
+        if(this.isWord()) {
+            nodes.add(this);
+        }
+        for(int i = 0; i < this.children.size(); ++i) {
+            n = this.children.get(i);
             if(n.children != null) {
-                if(n.isWord()) {
-                    nodes.add(n);
-                    nodes.addAll(n.getWordNodes());
-                } else {
-                    nodes.addAll(n.getWordNodes());
-                }
+                nodes.addAll(n.getWordNodes());
             } else {
                 if(n.isWord()) {
                     nodes.add(n);
@@ -136,6 +125,25 @@ public class Node {
             sb.append(node.getKey());
             node = node.getParent();
         }
+        sb.append(node.getKey());
         return sb.reverse().toString();
+    }
+
+    void remove(ArrayList<Character> keys) {
+        Node node = this;
+        while(keys.size() > 0) {
+            node = node.getChild(keys.get(0));
+            keys.remove(0);
+        }
+        if(node.children.size() == 0) {
+            Node parent = node.getParent();
+            parent.children.remove(node);
+            while(!parent.isWord() && parent.getParent().children.size() > 0) {
+                parent = parent.getParent();
+                parent.children.remove(0);
+            }
+        } else {
+            node.setWord(false);
+        }
     }
 }
