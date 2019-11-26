@@ -51,7 +51,7 @@ public class Tree {
         this.root.remove(keys);
     }
 
-    public void exists(String word) {
+    public boolean exists(String word) {
         ArrayList<Character> keys = new ArrayList<>();
         for (int i= 0 ; i < word.length(); ++i) {
             keys.add(word.charAt(i));
@@ -61,13 +61,11 @@ public class Tree {
             node = node.getChild(keys.get(0));
             keys.remove(0);
         }
-        if(node == null){
-            System.out.println("Essa palavra (" + word + ") não existe!");
-            return;
+        if(node != null) {
+           if(node.isWord())
+                return true;
         }
-        if(node.isWord()) {
-            System.out.println("Essa palavra (" + word + ") existe!");
-        }
+        return false;
     }
 
     public boolean existChildren() {

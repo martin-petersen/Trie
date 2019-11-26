@@ -1,6 +1,7 @@
 package com.company.trie;
 
 import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 public class TreeTest {
 
@@ -29,12 +30,15 @@ public class TreeTest {
         root.insert(s5);
         root.insert(s1);
 
-        assertTrue(root.closeWords("am").contains("ameixa") && root.closeWords("am").contains("amei") &&
-                root.closeWords("am").contains("ame") && root.closeWords("am").contains("amo") &&
-                root.closeWords("am").contains("amou"));
+        assertTrue(root.closeWords("am").contains("ameixa"));
+        assertTrue(root.closeWords("am").contains("amei"));
+        assertTrue(root.closeWords("am").contains("ame"));
+        assertTrue(root.closeWords("am").contains("amo"));
+        assertTrue(root.closeWords("am").contains("amou"));
 
-        assertTrue(root.closeWords("am",2).size() == 2 && root.closeWords("am",2).contains("ame") &&
-                root.closeWords("am",2).contains("amei"));
+        assertEquals(2, root.closeWords("am", 2).size());
+        assertTrue(root.closeWords("am",2).contains("ame"));
+        assertTrue(root.closeWords("am",2).contains("amei"));
     }
 
     @org.junit.Test
@@ -64,12 +68,9 @@ public class TreeTest {
         String word2 = "ameixa";
         root.insert(word2);
 
-        root.exists(word);
 
-        assertTrue("Essa palavra (" + word + ") não existe!",true);
 
-        root.exists(word2);
-
-        assertTrue("Essa palavra (" + word2 + ") não existe!",true);
+        assertEquals(false, root.exists(word));
+        assertEquals(true,root.exists(word2));
     }
 }
