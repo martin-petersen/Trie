@@ -35,6 +35,10 @@ public class Node {
         this.word = word;
     }
 
+    public boolean existChildren() {
+        return this.children.isEmpty();
+    }
+
     Node getChild(Character key) {
         for (Node n:
              this.children) {
@@ -141,6 +145,8 @@ public class Node {
             while(!parent.isWord() && parent.getParent().children.size() > 0) {
                 parent = parent.getParent();
                 parent.children.remove(0);
+                if(parent.getParent() == null)
+                    return;
             }
         } else {
             node.setWord(false);

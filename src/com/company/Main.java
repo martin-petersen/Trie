@@ -6,6 +6,7 @@ public class Main {
 
     public static void main(String[] args) {
         Tree root = new Tree();
+        System.out.println(root.existChildren());
 
         String s1 = "ameixa";
         String s2 = "amei";
@@ -13,12 +14,12 @@ public class Main {
         String s4 = "amo";
         String s5 = "amou";
 
-        root.insert(s1);
+
         root.insert(s2);
         root.insert(s3);
         root.insert(s4);
         root.insert(s5);
-
+        root.insert(s1);
         System.out.println(root.closeWords("am").toString());
         System.out.println(root.closeWords("am",2).toString());
 
@@ -27,6 +28,8 @@ public class Main {
 
         root.removeWord(s1);
 
-        System.out.println(root.closeWords("am").toString());
+        System.out.println(root.existChildren());
+
+        //System.out.println(root.closeWords("am").toString());
     }
 }

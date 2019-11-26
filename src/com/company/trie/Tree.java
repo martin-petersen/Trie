@@ -65,4 +65,8 @@ public class Tree {
             System.out.println("Essa palavra (" + word + ") existe!");
         }
     }
+
+    public boolean existChildren() {
+        return root.existChildren();
+    }
 }
