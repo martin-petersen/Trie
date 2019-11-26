@@ -33,8 +33,12 @@ public class Tree {
         ArrayList<String> palavras = new ArrayList<>();
         ArrayList<String> tmp = this.root.find(keys);
 
-        for(int i = 0; i < limit; ++i) {
-            palavras.add(tmp.get(i));
+        if(tmp.size() < limit) {
+            palavras.addAll(tmp);
+        } else {
+            for(int i = 0; i < limit; ++i) {
+                palavras.add(tmp.get(i));
+            }
         }
         return palavras;
     }

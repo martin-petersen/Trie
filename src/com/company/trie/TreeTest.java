@@ -1,7 +1,5 @@
 package com.company.trie;
 
-import java.util.ArrayList;
-
 import static org.junit.Assert.*;
 
 public class TreeTest {

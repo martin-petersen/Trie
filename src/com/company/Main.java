@@ -2,34 +2,26 @@ package com.company;
 
 import com.company.trie.Tree;
 
+import java.io.*;
+
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Tree root = new Tree();
-        System.out.println(root.existChildren());
 
-        String s1 = "ameixa";
-        String s2 = "amei";
-        String s3 = "ame";
-        String s4 = "amo";
-        String s5 = "amou";
+        File file = new File(args[0]);
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
+        String str;
 
+        while ((str = bufferedReader.readLine()) != null) {
+            root.insert(str);
+        }
 
-        root.insert(s2);
-        root.insert(s3);
-        root.insert(s4);
-        root.insert(s5);
-        root.insert(s1);
-        System.out.println(root.closeWords("am").toString());
-        System.out.println(root.closeWords("am",2).toString());
-
-        root.exists("ams");
-
-
-        root.removeWord(s1);
-
-        System.out.println(root.existChildren());
-
-        //System.out.println(root.closeWords("am").toString());
+        if(args.length == 3) {
+            int limit = Integer.parseInt(args[2]);
+            System.out.println(root.closeWords(args[1], limit));
+        } else {
+            System.out.println(root.closeWords(args[1]));
+        }
     }
 }
