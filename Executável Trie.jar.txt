@@ -1,0 +1,1 @@
+O .jar do projeto está em Trie/out/artifacts/Trie_jar
